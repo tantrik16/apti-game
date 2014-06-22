@@ -1,0 +1,18 @@
+{
+  "name": "Ip-Rank-By-Name",
+  "main": "server.js",
+  "author": "tantrik16",
+  "dependencies": {
+    "express": "~3.4.4",
+    "ejs": "~0.8.5",
+    "everyauth": "^0.4.5",
+    "connect-flash": "^0.1.1",
+    "passport-facebook": "^1.0.3",
+    "socket.io": "^1.0.4",
+    "cheerio": "latest",
+    "request": "latest",
+    "mongodb": "latest",
+    "requestify": "^0.1.16",
+    "node-uuid": "^1.4.1"
+  }
+}
