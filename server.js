@@ -4,11 +4,24 @@ var https = require('https');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
+var mongoose = require('mongoose');
 var answers = {};
 var scores = {};
 var streak = {};
 var highstreak = 0;
 var visitors = 50;
+mongoose.connect('mongodb://tantrik:tantrik1115@ds037907.mongolab.com:37907/heroku_app26645381');
+var question = new mongoose.Schema({
+	question : 'string',
+	A : 'string',
+	B : 'string',
+	C : 'string',
+	D : 'string',
+	answer : 'string',
+	id : 'number'},{
+	collection : 'questions'
+});
+var Question = mongoose.model('Question', question);
 var math_it = {
 	'+' : function (x,y) {return x + y},
 	'-' : function (x,y) {return x - y},
@@ -18,32 +31,35 @@ io.on('connection', function (socket){
 	visitors++;
 	socket.emit('visitors', visitors);
 	
-	function gen_emit_num(){
-		var op = ['+', '-', '*'];
-		var num1 = parseInt(Math.random() * 100);
-		var num2 = parseInt(Math.random() * 100);
-		var num3 = parseInt(Math.random() * 100);
-		var op1 =  op[parseInt(Math.random() * 3)];
-		var op2 =  op[parseInt(Math.random() * 3)];		
-		var ret = num1.toString() + " " + op1 + " " + num2.toString() + " " + op2 + " " + num3.toString();
-		var ans = 0;	
-		if(op2 == '*'){
-			ans = math_it[op2](num2,num3);
-			ans = math_it[op1](num1,ans);
-			console.log(ans);
+	function gen_question(){
+		var num;
+		while(1){
+			num = parseInt(Math.random()*55);
+			if(num)
+				break;
 		}
-		else{
-			ans = math_it[op1](num1,num2);
-			ans = math_it[op2](ans,num3);
-		}
-		answers[socket.id] = ans;
-		socket.emit('number', ret);
+		Question.findOne({id : num}, function (err, res){
+			if(err){
+				socket.emit('number', 'Failed To Load Question!');
+				return;
+			}
+			console.log(res);
+			var post = {
+				question : res['question'],
+				'A' : res['A'], 
+				'B' : res['B'], 
+				'C' : res['C'], 
+				'D' : res['D']
+			};
+			answers[socket.id] = res['answer'];
+			socket.emit('number', post);
+		});
 	}
 	socket.emit('streakhigh', highstreak);	
 	socket.on('number', function (data){
 		streak[socket.id] = 0;
-		socket.emit('streak', streak[socket.id]);
-		gen_emit_num();
+		socket.emit('streak', streak[socket.id]);		
+		gen_question();
 	});
 	socket.on('answer', function (data){
 		var flag = true;
@@ -71,8 +87,9 @@ io.on('connection', function (socket){
 			socket.emit('streak', streak[socket.id]);
 			socket.emit('answer', "Oh Snap :(  " + data.toString() + "  is Incorrect!");
 		}
-		if(flag)
-			gen_emit_num();
+		if(flag){
+			gen_question();
+		}
 	});
 	socket.on('disconnect', function (){
 		delete answers[socket.id];
@@ -111,7 +128,7 @@ app.configure(function (){
 
 
 
-var PORT = Number(process.env.PORT || 5000);
+var PORT = Number(process.env.PORT || 5001);
 var HOST = 'localhost';
 
 

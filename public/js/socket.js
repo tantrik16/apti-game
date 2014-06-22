@@ -9,7 +9,8 @@ socket.emit('number', 'start');
     document.getElementById('button').innerHTML = 'Next Question';
 });            
 socket.on('number', function (data){
-    document.getElementById('game').innerHTML = '<h2>' + data + '<h2>';
+    console.log(data);
+    document.getElementById('game').innerHTML = '<h2>' + data['question'] + '<h2>';
 });
 var sub = document.getElementById('submit');
 sub.addEventListener('click', function (){                
@@ -34,7 +35,4 @@ socket.on('streakhigh', function (data){
     if(!isNaN(data))
         document.getElementById('streakhigh').innerHTML = "Highest Streak : " + data; 
 });
-socket.on('visitors', function (data){
-    if(!isNaN(data))
-        document.getElementById('visit').innerHTML = "Total Visitors : " + data;
-});
+
