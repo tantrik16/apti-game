@@ -29,6 +29,12 @@ var question = new mongoose.Schema({
 	collection : 'questions'
 });
 var Question = mongoose.model('Question', question);
+var total_questions = 0;
+Question.find(function (err,res){
+	if(err)
+		return;
+	total_questions = res.length;
+})
 var math_it = {
 	'+' : function (x,y) {return x + y},
 	'-' : function (x,y) {return x - y},
@@ -42,7 +48,7 @@ io.on('connection', function (socket){
 	function gen_question(){
 		var num;
 		while(1){
-			num = parseInt(Math.random()*55);
+			num = parseInt(Math.random()*total_questions);
 			if(num)
 				break;
 		}
