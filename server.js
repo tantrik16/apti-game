@@ -60,22 +60,24 @@ io.on('connection', function (socket){
 				'D' : res['D']
 			};
 			answers[socket.id] = res['answer'];
-			console.log(post);
+			//console.log(post);
 			socket.emit('number', post);
 		});
 	}
 	socket.emit('streakhigh', highstreak);	
 	socket.on('number', function (data){
-		console.log("HI!!");
+		//console.log("HI!!");
 		streak[socket.id] = 0;
 		socket.emit('streak', streak[socket.id]);		
 		gen_question();
 	});
 	socket.on('answer', function (data){
 		var flag = true;
-		console.log(data);
-		if(isNaN(data))
-			socket.emit('answer', "Please Enter a Number!");
+		//console.log(data);
+		if(data.length != 0 || data != 'A' || data != 'B' || data != 'C' || data != 'D'){ 
+			socket.emit('answer', "Please Select an Option!");
+			flag = false;
+		}
 		if(!answers[socket.id]){
 			socket.emit('answer', "Start The Game!");
 			flag = false;
