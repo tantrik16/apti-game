@@ -73,8 +73,8 @@ io.on('connection', function (socket){
 	});
 	socket.on('answer', function (data){
 		var flag = true;
-		//console.log(data);
-		if(data.length != 0 || data != 'A' || data != 'B' || data != 'C' || data != 'D'){ 
+		//console.log(data + data.length);
+		if(data != 'A' && data != 'B' && data != 'C' && data != 'D'){ 
 			socket.emit('answer', "Please Select an Option!");
 			flag = false;
 		}
