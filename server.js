@@ -5,6 +5,9 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var mongoose = require('mongoose');
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+var route = require('./app/app.js')(eventEmitter);
 var answers = {};
 var scores = {};
 var streak = {};
@@ -126,12 +129,12 @@ app.configure(function (){
 	});	
 });
 
-
+eventEmitter.on('sk11', function (data){
+	console.log(data);
+});
 
 var PORT = Number(process.env.PORT || 5001);
 var HOST = 'localhost';
-
-
 app.post('/upload', function (req, res){
 	//console.log(req.body.image.path);
 	req.on('data', function(chunk){

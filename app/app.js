@@ -1,7 +1,4 @@
-(function (){
-	var app = angular.module('share', []);
+module.exports = function (eventEmitter){		
+	eventEmitter.emit('sk11', 'sk11rocks');	
 
-	app.controller('UploadController', function (){
-		
-	});
-})();
+};
