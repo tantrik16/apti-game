@@ -17,7 +17,7 @@ select,
 textarea {
     color: #222;
 }
-
+td input, td label { vertical-align&#58; middle; }
 html {
     font-size: 1em;
     line-height: 1.4;

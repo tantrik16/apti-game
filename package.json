@@ -14,6 +14,7 @@
     "mongodb": "latest",
     "requestify": "^0.1.16",
     "node-uuid": "^1.4.1",
-    "mongoose": "^3.8.12"
+    "mongoose": "^3.8.12",
+    "memwatch": "^0.2.2"
   }
 }

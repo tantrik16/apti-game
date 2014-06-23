@@ -6,6 +6,7 @@ var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var mongoose = require('mongoose');
 var events = require('events');
+var memwatch = require('memwatch');
 var eventEmitter = new events.EventEmitter();
 var route = require('./app/app.js')(eventEmitter);
 var answers = {};
@@ -13,6 +14,9 @@ var scores = {};
 var streak = {};
 var highstreak = 0;
 var visitors = 50;
+memwatch.on('stats', function (stats){
+	console.log(stats);
+});
 mongoose.connect('mongodb://tantrik:tantrik1115@ds037907.mongolab.com:37907/heroku_app26645381');
 var question = new mongoose.Schema({
 	question : 'string',
@@ -31,6 +35,7 @@ var math_it = {
 	'*' : function (x,y) {return x * y}
 };
 io.on('connection', function (socket){
+	
 	visitors++;
 	socket.emit('visitors', visitors);
 	
@@ -46,7 +51,7 @@ io.on('connection', function (socket){
 				socket.emit('number', 'Failed To Load Question!');
 				return;
 			}
-			console.log(res);
+			//console.log(res);
 			var post = {
 				question : res['question'],
 				'A' : res['A'], 
@@ -55,11 +60,13 @@ io.on('connection', function (socket){
 				'D' : res['D']
 			};
 			answers[socket.id] = res['answer'];
+			console.log(post);
 			socket.emit('number', post);
 		});
 	}
 	socket.emit('streakhigh', highstreak);	
 	socket.on('number', function (data){
+		console.log("HI!!");
 		streak[socket.id] = 0;
 		socket.emit('streak', streak[socket.id]);		
 		gen_question();
