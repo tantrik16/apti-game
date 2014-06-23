@@ -10,6 +10,7 @@ socket.emit('number', 'start');
 socket.on('number', function (data){    
     document.getElementById('game').innerHTML = '<h2>' + data['question'] + '<h2>';    
     for(var i = 0; i < 4; i++){
+        document.getElementById('opt' + (i+1).toString()).style.display = 'block';
         document.getElementById(opt[i]).innerHTML = data[opt[i]];
     }
 });
