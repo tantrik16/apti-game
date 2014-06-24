@@ -141,7 +141,7 @@ io.on('connection', function (socket){
 				highstreak = streak[socket.id];
 				io.sockets.emit('streakhigh', highstreak);	
 				var temp = new High({
-					highscore : highstreak;
+					highscore : highstreak
 				});
 				temp.save(function (err){
 					if(err)
