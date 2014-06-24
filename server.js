@@ -44,6 +44,9 @@ app.configure(function (){
 	});	
 });
 mongoose.connect('mongodb://tantrik:tantrik1115@ds037907.mongolab.com:37907/heroku_app26645381');
+var high = new mongoose.Schema({
+	highscore : 'string'
+});
 var question = new mongoose.Schema({
 	question : 'string',
 	A : 'string',
@@ -64,12 +67,18 @@ var question_temp = new mongoose.Schema({
 });
 var Question = mongoose.model('Question', question);
 var Question_temp = mongoose.model('Question_temp', question_temp);
+var High = mongoose.model('High', high);
 var total_questions = 0;
 Question.find(function (err,res){
 	if(err)
 		return;
 	total_questions = res.length;
-})
+});
+High.find(function (err, res){
+	if(err)
+		return;
+	highstreak = res[0]['highscore'];
+});
 var math_it = {
 	'+' : function (x,y) {return x + y},
 	'-' : function (x,y) {return x - y},
@@ -131,6 +140,13 @@ io.on('connection', function (socket){
 			if(streak[socket.id] > highstreak){
 				highstreak = streak[socket.id];
 				io.sockets.emit('streakhigh', highstreak);	
+				var temp = new High({
+					highscore : highstreak;
+				});
+				temp.save(function (err){
+					if(err)
+						console.log(err);
+				});
 			}
 			socket.emit('answer', data.toString() + "  is correct!");
 			socket.emit('streak', streak[socket.id]);
