@@ -15,6 +15,8 @@
     "requestify": "^0.1.16",
     "node-uuid": "^1.4.1",
     "mongoose": "^3.8.12",
-    "memwatch": "^0.2.2"
+    "memwatch": "^0.2.2",
+    "google-caja": "0.0.2",
+    "sanitizer": "^0.1.1"
   }
 }

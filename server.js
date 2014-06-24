@@ -7,6 +7,7 @@ var io = require('socket.io').listen(server);
 var mongoose = require('mongoose');
 var events = require('events');
 var memwatch = require('memwatch');
+var sanitizer = require('sanitizer');
 var eventEmitter = new events.EventEmitter();
 var route = require('./app/app.js')(eventEmitter);
 var answers = {};
@@ -28,7 +29,16 @@ var question = new mongoose.Schema({
 	id : 'number'},{
 	collection : 'questions'
 });
+var question_temp = new mongoose.Schema({
+	question : 'string',
+	A : 'string',
+	B : 'string',
+	C : 'string',
+	D : 'string',
+	answer : 'string'
+});
 var Question = mongoose.model('Question', question);
+var Question_temp = mongoose.model('Question_temp', question_temp);
 var total_questions = 0;
 Question.find(function (err,res){
 	if(err)
@@ -107,6 +117,40 @@ io.on('connection', function (socket){
 		}
 		if(flag){
 			gen_question();
+		}
+	});
+	socket.on('question', function (data){
+		var flag = true;
+		for(var i = 0; i < data.length; i++){
+			data[i] = sanitizer.sanitize(data[i]);
+			console.log(data[i]);
+			if(data[i].length == 0 || data[0].length < 5 || data[i].indexOf('$') != -1 || data[i].indexOf('&#36;') != '-1' || data[5].length != 1){
+				flag = false;
+				break;
+			}
+
+		}
+		if(flag){			
+			var Q = data[0], op1 = data[1], op2 = data[2], op3 = data[3], op4 = data[4], answer = data[5];
+			var temp = new Question_temp({
+				question : Q,
+				A : op1,
+				B : op2,
+				C : op3,
+				D : op4,
+				answer : answer
+			});
+			temp.save(function (err){
+				if(err){
+					socket.emit('entered', 'Database Snapped :(');
+				}
+				else{
+					socket.emit('entered', 'Question is now up for Review!');
+				}
+			});
+		}
+		else{
+			socket.emit('entered', 'Invalid Question!');
 		}
 	});
 	socket.on('disconnect', function (){
