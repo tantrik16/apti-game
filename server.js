@@ -97,12 +97,17 @@ io.on('connection', function (socket){
 			if(num)
 				break;
 		}
+		console.log(total_questions);
+		console.log(num);
 		Question.findOne({id : num}, function (err, res){
 			if(err){
 				socket.emit('number', 'Failed To Load Question!');
 				return;
 			}
-			//console.log(res);
+			if(res === null){
+				gen_question();
+				return;
+			}
 			var post = {
 				question : res['question'],
 				'A' : res['A'], 
