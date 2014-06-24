@@ -15,7 +15,7 @@ l.addEventListener("click",function(){var e=true
 var n=[]
 var o=["Question","optA","optB","optC","optD","Cans"]
 var d=[]
-for(var l=0;l<5;l++){d=d.concat(document.getElementById(o[l]).value)}if(d[0].length<5){e=false
+for(var l=0;l<5;l++){d=d.concat(document.getElementById(o[l]).value.trim())}if(d[0].length<5){e=false
 n=n.concat("Question Appears to be Too Short!")
 document.getElementById(o[0]).style.borderColor="red"
 document.getElementById(o[0]).style.borderWidth="1px"}for(var l=0;l<5;l++){d[l]=html_sanitize(d[l])
