@@ -18,6 +18,31 @@ var visitors = 50;
 memwatch.on('stats', function (stats){
 	console.log(stats);
 });
+app.configure(function (){
+	/*zapp.get('*',function(req,res,next){
+  		if(req.headers['x-forwarded-proto']!='https')
+    		res.redirect('https://morning-tor-3846.herokuapp.com'+req.url);
+  		else
+    		next(); /* Continue to other routes if we're not redirecting */
+
+	//});
+	app.use(function (req, res, next){
+		var ipAddress;
+		//console.log(process.env);
+  		var forwardedIpsStr = req.header('x-forwarded-for');      // IP LOgger
+  		if(forwardedIpsStr){
+    		var forwardedIps = forwardedIpsStr.split(',');
+    		ipAddress = forwardedIps[0];
+  		}
+  		if(!ipAddress) {    		
+    		ipAddress = req.connection.remoteAddress;
+  		}
+  		console.log(ipAddress);
+  		//console.log(req.headers);
+  	
+  		next();
+	});	
+});
 mongoose.connect('mongodb://tantrik:tantrik1115@ds037907.mongolab.com:37907/heroku_app26645381');
 var question = new mongoose.Schema({
 	question : 'string',
@@ -76,7 +101,7 @@ io.on('connection', function (socket){
 				'D' : res['D']
 			};
 			answers[socket.id] = res['answer'];
-			//console.log(post);
+			console.log(post);
 			socket.emit('number', post);
 		});
 	}
@@ -89,7 +114,7 @@ io.on('connection', function (socket){
 	});
 	socket.on('answer', function (data){
 		var flag = true;
-		//console.log(data + data.length);
+		console.log(data);
 		if(data != 'A' && data != 'B' && data != 'C' && data != 'D'){ 
 			socket.emit('answer', "Please Select an Option!");
 			flag = false;
