@@ -77,7 +77,8 @@ Question.find(function (err,res){
 High.find(function (err, res){
 	if(err)
 		return;
-	highstreak = res[0]['highscore'];
+	if(res.length)
+		highstreak = res[0]['highscore'];
 });
 var math_it = {
 	'+' : function (x,y) {return x + y},
