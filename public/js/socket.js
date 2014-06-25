@@ -7,13 +7,18 @@ break}return 1!=n.length||0==n?void(document.getElementById("result").innerHTML=
 var d=document.getElementById("addbtn")
 d.addEventListener("click",function(){if(document.getElementById("console").style.display=="block"){document.getElementById("console").style.display="none"
 document.getElementById("addConsole").style.display="block"
-this.innerHTML="Resume Game!"}else{document.getElementById("console").style.display="block"
+this.innerHTML="Resume Game!"
+document.getElementById('valid').innerHTML = ""
+o=["Question","optA","optB","optC","optD","Cans"]
+for(var t=0;t<5;t++){document.getElementById(o[t]).value=""
+document.getElementById(o[t]).style.borderColor="white"}
+}else{document.getElementById("console").style.display="block"
 document.getElementById("addConsole").style.display="none"
 this.innerHTML="Add a Question!"}})
 var l=document.getElementById("submit1")
 l.addEventListener("click",function(){var e=true
 var n=[]
-var o=["Question","optA","optB","optC","optD","Cans"]
+var o=["Question","optA","optB","optC","optD","Cans"];
 var d=[]
 for(var l=0;l<5;l++){d=d.concat(document.getElementById(o[l]).value.trim())}if(d[0].length<5){e=false
 n=n.concat("Question Appears to be Too Short!")
