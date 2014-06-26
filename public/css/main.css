@@ -23,9 +23,7 @@ html {
     line-height: 1.4;
 }
 @media screen and (max-width : 480px){
-    background-image:url('../images/intro.jpg');
-    background-size:cover;     
-    background-repeat:no-repeat;
+    
 }
 body{
     background-image:url('../images/intro.jpg');
