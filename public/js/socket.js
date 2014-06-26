@@ -1,5 +1,5 @@
 !function(){var e=["A","B","C","D"],t=io.connect(),n=document.getElementById("button")
-n.addEventListener("click",function(){t.emit("number","start"),document.getElementById("button").innerHTML="Next Question", document.getElementById("game").innerHTML="",document.getElementById("loading").innerHTML="<h2> Fetching the Question.... </h2>"}, document.getElementById('options').style.display = 'none'),t.on("number",function(t){document.getElementById('options').style.display = 'block',document.getElementById("loading").innerHTML= "",document.getElementById("game").innerHTML="<h2>"+t.question+"<h2>"
+n.addEventListener("click",function(){document.getElementById('instructions').style.display = 'none',t.emit("number","start"),document.getElementById("button").innerHTML="Next Question", document.getElementById("game").innerHTML="",document.getElementById("loading").innerHTML="<h2> Fetching the Question.... </h2>"}, document.getElementById('options').style.display = 'none'),t.on("number",function(t){document.getElementById('options').style.display = 'block',document.getElementById("loading").innerHTML= "",document.getElementById("game").innerHTML="<h2>"+t.question+"<h2>"
 for(var n=0;4>n;n++)document.getElementById("opt"+(n+1)).style.display="block",document.getElementById(e[n]).innerHTML=t[e[n]],document.getElementById("result").innerHTML=""})
 var o=document.getElementById("submit")
 o.addEventListener("click",function(){for(var n=0,o=0;4>o;o++)if(document.getElementsByName("Q")[o].checked){n=e[o],document.getElementsByName("Q")[o].checked=!1
@@ -39,4 +39,6 @@ document.getElementById("valid").innerHTML="Authenticated! Sending Question to s
 t.emit("question",d)
 t.on("entered",function(e){document.getElementById("valid").innerHTML=e
 for(var t=0;t<5;t++){document.getElementById(o[t]).value=""
-document.getElementById(o[t]).style.borderColor="white"}})}else{document.getElementById("valid").innerHTML=n[0]}})}()
+document.getElementById(o[t]).style.borderColor="white"}})}else{document.getElementById("valid").innerHTML=n[0]}})
+
+}()
