@@ -15,6 +15,7 @@ var scores = {};
 var streak = {};
 var highstreak = 0;
 var visitors = 50;
+var cmax = 3, clogged = 4;
 memwatch.on('stats', function (stats){
 	console.log(stats);
 });
@@ -86,7 +87,8 @@ var math_it = {
 	'*' : function (x,y) {return x * y}
 };
 io.on('connection', function (socket){
-	
+	clogged++;
+	//io.socket.emit('cvisitor', clogged);
 	visitors++;
 	socket.emit('visitors', visitors);
 	
@@ -138,7 +140,8 @@ io.on('connection', function (socket){
 			socket.emit('answer', "Start The Game!");
 			flag = false;
 		}
-		if(data == answers[socket.id]){
+
+		if(data == answers[socket.id]){			
 			if(streak[socket.id])
 				streak[socket.id]++;
 			else
@@ -154,6 +157,7 @@ io.on('connection', function (socket){
 						console.log(err);
 				});
 			}
+
 			socket.emit('answer', data.toString() + "  is correct!");
 			socket.emit('streak', streak[socket.id]);
 		}
