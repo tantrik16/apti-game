@@ -22,14 +22,12 @@ html {
     font-size: 1em;
     line-height: 1.4;
 }
-@media screen and (max-width : 480px){
-    
-}
-body{
-    background-image:url('../images/intro.jpg');
-    background-size:cover;     
-    background-repeat:no-repeat;
-    font-family: 'Raleway', sans-serif;
+body { 
+  background: url('../images/intro.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
