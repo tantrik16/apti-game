@@ -158,17 +158,16 @@ io.on('connection', function (socket){
 				});
 			}
 
-			socket.emit('answer', data.toString() + "  is correct!");
+			socket.emit('answer', "You got it Right! +1 Streak!");
 			socket.emit('streak', streak[socket.id]);
+			gen_question();
 		}
 		else if(flag){
 			streak[socket.id] = 0;
 			socket.emit('streak', streak[socket.id]);
-			socket.emit('answer', "Oh Snap :(  " + data.toString() + "  is Incorrect!");
+			socket.emit('answer', "Oh Snap :( Try it Again! :) " );
 		}
-		if(flag){
-			gen_question();
-		}
+		
 	});
 	socket.on('question', function (data){
 		var flag = true;
