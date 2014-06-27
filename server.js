@@ -90,8 +90,8 @@ var math_it = {
 io.on('connection', function (socket){
 	clogged++;
 	//io.socket.emit('cvisitor', clogged);
-	visitors++;
-	socket.emit('visitors', visitors);
+	
+	socket.emit('visitors', clogged);
 	
 	function gen_question(){
 		var num;

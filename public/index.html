@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -20,8 +21,17 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=577914135656293&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
         <div id = "header" align = "center">
             <h1>The Apti Game! </h1>
+
         </div>
         
 </div>
@@ -99,6 +109,7 @@
                 </div>
             
         </div>
+        <div class="fb-like" data-href="http://facebook.com/aptitutor" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
         <!--<div id = "form">
             <form method = "POST" action = "/upload">
                 <input type = "file" name = "image" accept="image/x-png, image/gif, image/jpeg"><br><br>
@@ -111,7 +122,7 @@
             Placement.
             CAT.
         </div>
-        <script src="//ajax.googleapis.com/ajax/libs/jsquery/1.10.2/jquery.min.js"></script>
+         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="https://s3-ap-southeast-1.amazonaws.com/aptituor/public/socket.io.js"></script>
         <script type="text/javascript" src="http://caja.appspot.com/html-css-sanitizer-minified.js"></script>
