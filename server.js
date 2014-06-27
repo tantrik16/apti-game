@@ -164,14 +164,14 @@ io.on('connection', function (socket){
 			socket.emit('streak', streak[socket.id]);
 			gen_question();
 		}
-		else if(flag){
-			streak[socket.id] = 0;
-			socket.emit('streak', streak[socket.id]);
+		else if(flag){			
 			if(tries[socket.id] == 2){
 				tries[socket.id] = 1;				
 				socket.emit('answer', "Oh Snap :( You have " + tries[socket.id] + " try left!");
 			}
 			else{
+				streak[socket.id] = 0;
+				socket.emit('streak', streak[socket.id]);
 				socket.emit('answer', "Both tries exhausted :(");
 				gen_question();
 			}
