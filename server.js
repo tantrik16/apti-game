@@ -91,7 +91,7 @@ io.on('connection', function (socket){
 	clogged++;
 	//io.socket.emit('cvisitor', clogged);
 	
-	socket.emit('visitors', clogged);
+	
 	
 	function gen_question(){
 		var num;
