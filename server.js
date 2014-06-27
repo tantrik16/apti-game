@@ -12,6 +12,7 @@ var eventEmitter = new events.EventEmitter();
 var route = require('./app/app.js')(eventEmitter);
 var answers = {};
 var scores = {};
+var tries = {};
 var streak = {};
 var highstreak = 0;
 var visitors = 50;
@@ -119,6 +120,7 @@ io.on('connection', function (socket){
 			};
 			answers[socket.id] = res['answer'];
 			console.log(post);
+			tries[socket.id] = 2;
 			socket.emit('number', post);
 		});
 	}
@@ -165,7 +167,14 @@ io.on('connection', function (socket){
 		else if(flag){
 			streak[socket.id] = 0;
 			socket.emit('streak', streak[socket.id]);
-			socket.emit('answer', "Oh Snap :( Try it Again! :) " );
+			if(tries[socket.id] == 2){
+				tries[socket.id] = 1;				
+				socket.emit('answer', "Oh Snap :( You have " + tries[socket.id] + " try left!");
+			}
+			else{
+				socket.emit('answer', "Both tries exhausted :(");
+				gen_question();
+			}
 		}
 		
 	});
