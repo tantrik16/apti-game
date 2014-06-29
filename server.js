@@ -90,7 +90,8 @@ var math_it = {
 io.on('connection', function (socket){
 	clogged++;
 	//io.socket.emit('cvisitor', clogged);
-	
+	console.log(socket.id);
+	console.log("CONNECTED");
 	
 	
 	function gen_question(){
